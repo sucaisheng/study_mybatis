@@ -9,15 +9,15 @@
         <context:component-scan base-package="com.sucaisheng"></context:component-scan>
 
         <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"></bean>
-
+        <!--事务管理器-->
         <bean id="transactionManger" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <property name="dataSource" ref="dataSource"></property>
         </bean>
-
+        <!--操作事务的摸版对象-->
         <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
             <property name="transactionManager" ref="transactionManger"></property>
         </bean>
-
+        <!--配置sql会话工厂对象-->
         <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
             <property name="dataSource" ref="dataSource"></property>
             <property name="configLocation" value="classpath:com/sucaisheng/mybatis/sqlMapConfig.xml"></property>
@@ -27,7 +27,7 @@
 <!--            <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>-->
 <!--            <property name="mapperInterface" value="com.sucaisheng.Mapper.UserMapper"></property>-->
 <!--        </bean>-->
-
+            <!--包扫描-->
             <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
                 <property name="basePackage" value="com.sucaisheng.Mapper"></property>
             </bean>
@@ -42,5 +42,6 @@
     <!--       <aop:pointcut id="pc" expression="execution(* com.sucaisheng.tx.*Service.*(..))"/>-->
     <!--        <aop:advisor advice-ref="txAdvice" pointcut-ref="pc"></aop:advisor>-->
     <!--    </aop:config>-->
+        <!--注解式 - 开启注解驱动-->
         <tx:annotation-driven></tx:annotation-driven>
     </beans>
