@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sucaisheng.Mapper.UserMapper">
+    <select id="getAllUser" resultType="com.sucaisheng.pojo.User">
+        select * from t_user
+    </select>
+
+    <delete id="deleteUserById" parameterType="Integer">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="User">
+        insert into t_user values (null, #{username}, #{sex}, #{email})
+    </insert>
+
+    <select id="getUsersByUsername" parameterType="QueryVo" resultType="User">
+        select * from t_user where username like "%"#{user.username}"%"
+    </select>
+
+    <select id="getUserBySexAndUsername" parameterType="User" resultType="User">
+        select * from t_user where 1 = 1
+        <if test="sex != null and sex != ''">
+            and sex = #{sex}
+        </if>
+        <if test="username != null and username != ''">
+            and username = #{username}
+        </if>
+    </select>
+
+    <sql id="selectUser">
+        select * from t_user
+    </sql>
+
+    <select id="getUserByListId" resultType="User">
+        <include refid="selectUser" />
+            <where>
+                <foreach collection="list" open="id IN (" separator="," close=")" item="id">
+                    #{id}
+                </foreach>
+            </where>
+    </select>
+</mapper>
