@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 public class sqlSessionUtils {
     public static SqlSession getSqlSession(){
-        String resource = "sqlMapConfig.xml";
+        String resource = "com/sucaisheng/mybatis/sqlMapConfig.xml";
         InputStream resourceAsStream = null;
         SqlSession sqlSession = null;
         try {
